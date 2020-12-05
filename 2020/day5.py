@@ -8,18 +8,20 @@ def main():
     print(part1)
       
 
-def get_highest_seat_id(input):
-    highest_seat_id = -1
+def get_highest_seat_id(input):  
+    all_seat_ids = get_all_seat_ids(input)
+    return sorted(all_seat_ids)[-1] # Return the last item in the list
+
+def get_all_seat_ids(input):
+    all_seat_ids = []
     for row in input:
         row_identifier = row[:7]        # The first 7 elements in the array
         column_identifier = row[-3:]    # The last 3 elements in the array
         row = binary_counter(row_identifier, "F", "B")
         column = binary_counter(column_identifier, "L", "R")
         seat_id = get_seat_id(row, column)
-        if seat_id > highest_seat_id:
-            highest_seat_id = seat_id
-                
-    return highest_seat_id
+        all_seat_ids.append(seat_id)
+    return all_seat_ids
 
 
 
