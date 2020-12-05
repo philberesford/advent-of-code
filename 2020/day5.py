@@ -4,13 +4,31 @@ def main():
     with open("day5.data",'r') as fs:
         contents = list(map(lambda line: line.strip(), fs.readlines()))
     
-    part1 = get_highest_seat_id(contents)
-    print(part1)
+    all_seat_ids = get_all_seat_ids(contents)
+    part1 = get_highest_number(all_seat_ids)
+    print("Highest seat id is: {0}".format(part1))
+
+    
+    part2 = find_the_gap_in_number_sequence(all_seat_ids)
+    print("Your seat id is: {0}".format(part2))
       
 
-def get_highest_seat_id(input):  
-    all_seat_ids = get_all_seat_ids(input)
-    return sorted(all_seat_ids)[-1] # Return the last item in the list
+def find_the_gap_in_number_sequence(numbers):
+    sorted_numbers = sorted(numbers)
+    for index, num in enumerate(sorted_numbers):
+        if index < len(sorted_numbers) - 1:
+            if num != sorted_numbers[index+1] - 1:
+                return num + 1
+
+    raise "No gap in numbers was found!"
+
+def get_highest_number(numbers):
+    highest = 0
+    for num in numbers:
+        if num > highest:
+            highest = num
+
+    return highest    
 
 def get_all_seat_ids(input):
     all_seat_ids = []
@@ -23,11 +41,8 @@ def get_all_seat_ids(input):
         all_seat_ids.append(seat_id)
     return all_seat_ids
 
-
-
 def get_seat_id(row, column):
     return row * 8 + column
-
 
 def binary_counter(str, first_half_char, second_half_char):
     power_of = len(str)
@@ -44,7 +59,7 @@ def binary_counter(str, first_half_char, second_half_char):
         if index == len(str) - 1:
             if c == first_half_char:
                 return lower_bound
-            return upper_bound      # There is no other option the seat has to be the upper bound
+            return upper_bound      # There is no other option, the seat has to be the upper bound
             
 
 main()
