@@ -4,15 +4,24 @@ def main():
     with open("day5.data",'r') as fs:
         contents = list(map(lambda line: line.strip(), fs.readlines()))
     
-    # part1 = solve_part1(contents)
-    # print(part1)
-    
-    row = binary_counter("FBFBBFF", "F", "B")
-    column = binary_counter("RLR", "L", "R")
-    
-    print("Row: {0}, Column: {1}".format(row, column))
-    
-    print(get_seat_id(row, column))
+    part1 = get_highest_seat_id(contents)
+    print(part1)
+      
+
+def get_highest_seat_id(input):
+    highest_seat_id = -1
+    for row in input:
+        row_identifier = row[:7]        # The first 7 elements in the array
+        column_identifier = row[-3:]    # The last 3 elements in the array
+        row = binary_counter(row_identifier, "F", "B")
+        column = binary_counter(column_identifier, "L", "R")
+        seat_id = get_seat_id(row, column)
+        if seat_id > highest_seat_id:
+            highest_seat_id = seat_id
+                
+    return highest_seat_id
+
+
 
 def get_seat_id(row, column):
     return row * 8 + column
