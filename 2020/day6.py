@@ -30,7 +30,7 @@ def get_unique_question_count(person_delimiter, group):
 
 def intersection_of_lists(lists):
     head, *tail = map(set, lists)
-    return head.intersection(*tail)
+    return list(head.intersection(*tail))             # Be a good citizen and return the same type that we received as input
     
 def get_intersection_count(person_delimiter, group):
     person_answers = group.split(person_delimiter)    # For each person, create an array of all answers    
