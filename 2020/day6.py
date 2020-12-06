@@ -33,15 +33,14 @@ def get_unique_question_count(person_delimiter, group):
     return len(set(group.replace(person_delimiter, "")))
 
 def intersection_of_lists(lists):
-    sets = list(map(set, lists))
-    set_count = len(sets)
-    if set_count > 0:
-        intersect = sets[0]  
-        for x in range(1, set_count):
-            intersect = intersect.intersection(sets[x])
+    count = len(lists)
+    if count > 0:
+        intersect = set(lists[0])  
+        for index in range(1, count):
+            next_set = set(lists[index])
+            intersect = intersect.intersection(next_set)
     else:
-        raise 'No sets supplied'
-
+        raise Exception('No lists supplied')
     return intersect
     
 def get_intersection_count(person_delimiter, group):
