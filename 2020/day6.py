@@ -1,7 +1,7 @@
 def main():
-    fs = open("day6.data",'r')  
-    contents = list(map(lambda line: line.strip(), fs.readlines()))
-    
+    with open("day6.data",'r') as fs:
+        contents = list(map(lambda line: line.strip(), fs.readlines()))
+
     person_delimiter = "|"
     all_groups = get_all_groups(contents, person_delimiter)
     part1 = sum(map(lambda group: get_unique_question_count(person_delimiter, group), all_groups))
@@ -11,13 +11,10 @@ def main():
     print(part2)
 
 def get_all_groups(input, person_delimiter):    
-    start_new_group = True
     groups = []
     group = ""
-    row_count = 0
-    for row in input:
-        start_new_group = row_count > 0 and row == "" # An empty row starts a new group
-        if start_new_group:
+    for index, row in enumerate(input):
+        if index > 0 and row == "":       # An empty row starts a new group
             groups.append(group)
             group = row
         else:
@@ -25,7 +22,6 @@ def get_all_groups(input, person_delimiter):
                 group += person_delimiter # Add a marker to indicate a separate person's answers
             group += row
 
-        row_count += 1 
     groups.append(group)
     return groups
 
