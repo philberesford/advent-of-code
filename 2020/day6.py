@@ -3,8 +3,12 @@ def main():
     contents = list(map(lambda line: line.strip(), fs.readlines()))
     
     person_delimiter = "|"
-    part1 = sum(map(lambda group: get_unique_question_count(person_delimiter, group), get_all_groups(contents, person_delimiter)))
+    all_groups = get_all_groups(contents, person_delimiter)
+    part1 = sum(map(lambda group: get_unique_question_count(person_delimiter, group), all_groups))
     print(part1)
+
+    part2 = sum(map(lambda group: get_intersection_count(person_delimiter, group), all_groups))
+    print(part2)
 
 def get_all_groups(input, person_delimiter):    
     start_new_group = True
@@ -17,7 +21,9 @@ def get_all_groups(input, person_delimiter):
             groups.append(group)
             group = row
         else:
-            group += person_delimiter + row # Add a marker to indicate a separate person's answers
+            if group != "":                
+                group += person_delimiter # Add a marker to indicate a separate person's answers
+            group += row
 
         row_count += 1 
     groups.append(group)
@@ -25,5 +31,23 @@ def get_all_groups(input, person_delimiter):
 
 def get_unique_question_count(person_delimiter, group):
     return len(set(group.replace(person_delimiter, "")))
+
+def intersection_of_lists(lists):
+    sets = list(map(set, lists))
+    set_count = len(sets)
+    if set_count > 0:
+        intersect = sets[0]  
+        for x in range(1, set_count):
+            intersect = intersect.intersection(sets[x])
+    else:
+        raise 'No sets supplied'
+
+    return intersect
+    
+def get_intersection_count(person_delimiter, group):
+    person_answers = group.split(person_delimiter)    # For each person, create an array of all answers
+    intersection = intersection_of_lists(person_answers)
+    intersection_count = len(intersection)
+    return intersection_count
 
 main()
