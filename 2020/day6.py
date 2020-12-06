@@ -39,9 +39,9 @@ def intersection_of_lists(lists):
         for index in range(1, count):
             next_set = set(lists[index])
             intersect = intersect.intersection(next_set)
+        return intersect
     else:
         raise Exception('No lists supplied')
-    return intersect
     
 def get_intersection_count(person_delimiter, group):
     person_answers = group.split(person_delimiter)    # For each person, create an array of all answers
