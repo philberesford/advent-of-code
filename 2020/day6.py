@@ -2,13 +2,11 @@ def main():
     fs = open("day6.data",'r')  
     contents = list(map(lambda line: line.strip(), fs.readlines()))
     
-    part1 = sum(map(get_unique_question_count, get_all_groups(contents)))
+    person_delimiter = "|"
+    part1 = sum(map(lambda group: get_unique_question_count(person_delimiter, group), get_all_groups(contents, person_delimiter)))
     print(part1)
 
-
-
-
-def get_all_groups(input):    
+def get_all_groups(input, person_delimiter):    
     start_new_group = True
     groups = []
     group = ""
@@ -19,15 +17,13 @@ def get_all_groups(input):
             groups.append(group)
             group = row
         else:
-            group += row
+            group += person_delimiter + row # Add a marker to indicate a separate person's answers
 
         row_count += 1 
     groups.append(group)
     return groups
 
-
-
-def get_unique_question_count(group):
-    return len(set(group))
+def get_unique_question_count(person_delimiter, group):
+    return len(set(group.replace(person_delimiter, "")))
 
 main()
