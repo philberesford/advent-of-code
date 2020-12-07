@@ -3,28 +3,21 @@ def main():
         contents = list(map(lambda line: line.strip(), fs.readlines()))
 
     bags = get_all(contents)
-    
-    counter = 0
     part1 = len(find_in("shiny gold", bags))
     print(part1)
 
 def find_in(search_for, bags, searched = []): 
-    results = []
-
     if searched.count(search_for) > 0:
-        return results
+        return []
     
     searched.append(search_for)
-
-    for key, contained_bags in bags.items():
+    results = []
+    for container, contained_bags in bags.items():
         if contains_bag(search_for, contained_bags):
-            results.append(key)
+            results.append(container)                               # Add on the current container
+            results.extend(find_in(container, bags, searched))      # Add on the container of the containers
 
-    for parent in results:
-        for ancestor in find_in(parent, bags, searched):
-            results.append(ancestor)
-
-    return list(set(results))   # Only return the unique values
+    return list(set(results))   # Only return the unique containers values
 
 
 def contains_bag(search_for, possible_bags):
