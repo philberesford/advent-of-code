@@ -25,6 +25,30 @@ def main():
     state = bootSequence(instructions)
     print("Accumulator before infinite loop: {}".format(state.accumulator))
 
+    state = get_state_on_completion(instructions)
+    print("Accumulator after fixing instructions: {}".format(state.accumulator))
+
+def get_state_on_completion(instructions):
+    for i in range(0, len(instructions)):
+        modified_instructions = swap_nop_or_jmp_instruction_at_index(i, instructions)
+        state = bootSequence(modified_instructions)
+        if completed_all_instructions(state, modified_instructions):            
+            return state  # We had a successful boot sequence!
+            
+    return None # No run through the instructions resulted in a 'complete' state.
+
+def completed_all_instructions(state, instructions):
+    return state.instruction_pointer == len(instructions)
+
+def swap_nop_or_jmp_instruction_at_index(index, instructions):
+    modified_instructions = instructions.copy()
+    instruction = modified_instructions[index]
+    if instruction.startswith("nop"):
+        modified_instructions[index] = instruction.replace("nop", "jmp")
+    elif instruction.startswith("jmp"):
+        modified_instructions[index] = instruction.replace("jmp", "nop")
+    return modified_instructions
+
 def bootSequence(instructions): 
     state = State(0, 0)    
     all_states = []
