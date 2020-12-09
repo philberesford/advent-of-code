@@ -6,10 +6,10 @@ def main():
     part1 = get_number_that_is_not_in_preceding_pair_sums(25, numbers)
     print("The invalid number is: {}".format(part1))
 
-    part2 = get_preceding_set_of_numbers_that_sum(part1, numbers)
+    part2 = get_preceding_set_of_numbers_that_add_up_to_value(part1, numbers)
     print("Encryption weakness: {}".format(min(part2) + max(part2)))
 
-def get_preceding_set_of_numbers_that_sum(target, numbers):
+def get_preceding_set_of_numbers_that_add_up_to_value(target, numbers):
     for i in range(0, len(numbers)):
         for j in range(i-1, 0, -1):  # Get all indexes in the range starting at the current number and work backwards
             candidate_numbers = numbers[j:i-1]    
