@@ -16,6 +16,11 @@ def app():
     sums.append(current_sum)
     print(max(sums))
 
+    # part 2
+    sums.sort(reverse=True)
+    top_three = sums[0:3]
+    print(sum(top_three))
+
 
 if __name__ == "__main__":
     app()
