@@ -5,7 +5,8 @@ MARKED = "*"
 
 def app():
         input = read_input("day4.data")
-        print(get_part1(input))
+        # print(get_part1(input))
+        print(get_part2(input))
 
 def get_part1(input: List[str]) -> int:
     called_numbers = input[0].split(",")
@@ -17,6 +18,23 @@ def get_part1(input: List[str]) -> int:
             if has_winner(board):
                 total = get_total(board)
                 return total * int(number)
+
+
+def get_part2(input: List[str]) -> int:
+    called_numbers = input[0].split(",")
+    boards = get_boards(input)
+
+    last_winning_board_index = -1
+    print(len(boards))
+    for number in called_numbers:
+        for i in range(len(boards)):
+            board = boards[i]
+            board = mark_number_in(number, board)
+            if has_winner(board):
+                last_winning_board_index = i
+
+    boards = get_boards(input)
+    print(boards[last_winning_board_index])
 
 
 def get_total(board: List[List[str]]) -> int:
