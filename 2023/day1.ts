@@ -40,11 +40,8 @@ const part2 = (strings: string[]) => {
     .map(s => findFirst(backwardsNumbersAsString, reverse(s)))
     .map(backwardsStringToNumber);
 
-  const total = firstDigits
-    .map((value, index) => {
-      return parseInt(`${value}${secondDigits[index]}`, 10);
-    })
-    .reduce(add, 0);
+  const zipWithSecondDigit = (value: number, index: number) => parseInt(`${value}${secondDigits[index]}`, 10);
+  const total = firstDigits.map(zipWithSecondDigit).reduce(add, 0);
 
   console.log(total);
 };
