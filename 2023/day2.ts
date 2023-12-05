@@ -10,7 +10,7 @@ import {
   multiply,
   toInt,
 } from "./numbers";
-import { findFirst, reverse } from "./strings";
+import { findFirst, reverse, trim } from "./strings";
 
 const main = async () => {
   const workingPath = workingDirectory();
@@ -57,11 +57,10 @@ const stringToGameResult = (s: string): GameResult => {
   return rounds.map((selections) => {
     const roundResult: RoundResult = selections
       .split(",")
-      .map((selection) => selection.trim())
+      .map(trim)
       .map((selection) => {
-        const components = selection.split(" ").map((s) => s.trim());
-        const selectionResult: SelectionResult = [toInt(components[0]), components[1] as Colour];
-        return selectionResult;
+        const components = selection.split(" ").map(trim);
+        return [toInt(components[0]), components[1] as Colour];
       });
     return roundResult;
   });

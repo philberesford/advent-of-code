@@ -7,6 +7,10 @@ export const reverse = (s: string): string => {
   return s.split("").reverse().join("");
 };
 
+export const trim = (s: string): string => {
+    return s.trim();
+}
+
 export const findFirst = (lookFor: string[], lookIn: string): string => {
   const positions: [string, number][] = lookFor.map((s) => [s, lookIn.indexOf(s)]);
   let first: [string, number];
