@@ -54,9 +54,7 @@ export const stringToNumber = (s: string): number => {
 };
 
 export const backwardsStringToNumber = (s: string): number => {
-  const backwardsWordsToNumericValueMap = cloneMapWithReversedKeys(
-    wordsToNumericValueMap
-  );
+  const backwardsWordsToNumericValueMap = cloneMapWithReversedKeys(wordsToNumericValueMap);
 
   const stringsToNumericValuesMap = {
     ...numbersToValueMap,

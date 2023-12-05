@@ -8,10 +8,7 @@ export const reverse = (s: string): string => {
 };
 
 export const findFirst = (lookFor: string[], lookIn: string): string => {
-  const positions: [string, number][] = lookFor.map((s) => [
-    s,
-    lookIn.indexOf(s),
-  ]);
+  const positions: [string, number][] = lookFor.map((s) => [s, lookIn.indexOf(s)]);
   let first: [string, number];
   positions
     .filter((tuple) => tuple[1] >= 0) // Only consider tuples where the string was found;

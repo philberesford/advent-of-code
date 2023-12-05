@@ -19,10 +19,8 @@ const main = async () => {
 };
 
 const part1 = (strings: string[]) => {
-  const gameIsPossibleCriteria = (gameResult: GameResult) =>
-    isPossible(12, 13, 14, gameResult);
-  const gameIdTotaliser = (possible: boolean, gameIndex: number) =>
-    possible ? gameIndex + 1 : 0;
+  const gameIsPossibleCriteria = (result: GameResult) => isPossible(12, 13, 14, result);
+  const gameIdTotaliser = (possible: boolean, gameIndex: number) => (possible ? gameIndex + 1 : 0);
 
   const totalOfGameIds = strings
     .map(stringToGameResult)
@@ -47,10 +45,7 @@ const stringToGameResult = (s: string): GameResult => {
       .map((selection) => selection.trim())
       .map((selection) => {
         const components = selection.split(" ").map((s) => s.trim());
-        const selectionResult: SelectionResult = [
-          parseInt(components[0], 10),
-          components[1] as Colour,
-        ];
+        const selectionResult: SelectionResult = [parseInt(components[0], 10), components[1] as Colour];
         return selectionResult;
       });
     return roundResult;
@@ -59,12 +54,7 @@ const stringToGameResult = (s: string): GameResult => {
   return gameResult;
 };
 
-const isPossible = (
-  redCount: number,
-  greenCount: number,
-  blueCount: number,
-  result: GameResult
-) => {
+const isPossible = (redCount: number, greenCount: number, blueCount: number, result: GameResult) => {
   return result.every(
     (round) =>
       ballCount("red", round) <= redCount &&
@@ -74,9 +64,7 @@ const isPossible = (
 };
 
 const ballCount = (colour: Colour, round: RoundResult) => {
-  const selection: SelectionResult = round.find(
-    (selection) => colour === selection[1]
-  );
+  const selection: SelectionResult = round.find((selection) => colour === selection[1]);
   return selection ? selection[0] : 0; // If the colour isn't found, then there's no balls of that colour in the Round Result
 };
 
