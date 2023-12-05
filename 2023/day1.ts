@@ -1,6 +1,13 @@
 import { readAsStrings, workingDirectory } from "./io";
 import * as path from "path";
-import { getFirstAndLastDigitsAsNumber, add, stringToNumber, getWordsForDigits, getDigitsAsString } from "./numbers";
+import {
+  getFirstAndLastDigitsAsNumber,
+  add,
+  stringToNumber,
+  getWordsForDigits,
+  getDigitsAsString,
+  backwardsStringToNumber
+} from "./numbers";
 import { findFirst, reverse } from "./strings";
 
 const main = async () => {
@@ -24,14 +31,14 @@ const part2 = (strings: string[]) => {
   ];
 
   const firstDigits = strings
-    .map((s) => findFirst(numbersAsString, s))
-    .map((s) => stringToNumber(s));
+    .map(s => findFirst(numbersAsString, s))
+    .map(stringToNumber);
 
   // Now look through the strings backwards - being mindful to look for the reversed words!
   const backwardsNumbersAsString = numbersAsString.map(reverse)
   const secondDigits = strings
-    .map((s) => findFirst(backwardsNumbersAsString, reverse(s)))
-    .map((s) => stringToNumber(s, true));
+    .map(s => findFirst(backwardsNumbersAsString, reverse(s)))
+    .map(backwardsStringToNumber);
 
   const total = firstDigits
     .map((value, index) => {

@@ -40,15 +40,31 @@ export const getDigitsAsString = () => Object.keys(numbersToValueMap);
 
 export const getWordsForDigits = () => Object.keys(wordsToNumericValueMap);
 
-export const stringToNumber = (s: string, backwards: boolean = false): number => {
-  const backwardsWordsToNumericValueMap = cloneMapWithReversedKeys(wordsToNumericValueMap)
+export const stringToNumber = (s: string): number => {
+  const stringsToNumericValuesMap =  {
+    ...numbersToValueMap,
+    ...wordsToNumericValueMap
+  };
 
-  const stringsToNumericValuesMap = backwards
-    ? { ...numbersToValueMap, ...backwardsWordsToNumericValueMap }
-    : { ...numbersToValueMap, ...wordsToNumericValueMap };
   if (Object.keys(stringsToNumericValuesMap).indexOf(s) >= 0) {
     return stringsToNumericValuesMap[s];
   }
 
   throw Error(`Number ${s} not found in set of numbers to search`);
 };
+
+export const backwardsStringToNumber = (s: string): number => {
+  const backwardsWordsToNumericValueMap = cloneMapWithReversedKeys(wordsToNumericValueMap)
+
+  const stringsToNumericValuesMap = {
+    ...numbersToValueMap,
+    ...backwardsWordsToNumericValueMap
+  };
+
+  if (Object.keys(stringsToNumericValuesMap).indexOf(s) >= 0) {
+    return stringsToNumericValuesMap[s];
+  }
+
+  throw Error(`Number ${s} not found in set of numbers to search`);
+};
+
