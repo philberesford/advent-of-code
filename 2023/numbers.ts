@@ -1,4 +1,5 @@
-import { findFirst, findFirstDigit, reverse } from "./strings";
+import { findFirstDigit, reverse } from "./strings";
+import { cloneMapWithReversedKeys } from "./objects";
 
 export const getFirstAndLastDigitsAsNumber = (s: string): number => {
   const firstDigit = findFirstDigit(s);
@@ -11,7 +12,7 @@ export const add = (first: number, second: number): number => {
   return first + second;
 };
 
-const wordsToNumbersMap = {
+const wordsToNumericValueMap = {
   one: 1,
   two: 2,
   three: 3,
@@ -23,19 +24,7 @@ const wordsToNumbersMap = {
   nine: 9,
 };
 
-const backwardsWordsToNumbersMap = {
-  eno: 1,
-  owt: 2,
-  eerht: 3,
-  ruof: 4,
-  evif: 5,
-  xis: 6,
-  neves: 7,
-  thgie: 8,
-  enin: 9,
-};
-
-const numbersMap = {
+const numbersToValueMap = {
   "1": 1,
   "2": 2,
   "3": 3,
@@ -47,15 +36,18 @@ const numbersMap = {
   "9": 9,
 };
 
-export const stringToNumber = (
-  s: string,
-  backwards: boolean = false
-): number => {
-  const allStringsToNumbers = backwards
-    ? { ...numbersMap, ...backwardsWordsToNumbersMap }
-    : { ...numbersMap, ...wordsToNumbersMap };
-  if (Object.keys(allStringsToNumbers).indexOf(s) >= 0) {
-    return allStringsToNumbers[s];
+export const getDigitsAsString = () => Object.keys(numbersToValueMap);
+
+export const getWordsForDigits = () => Object.keys(wordsToNumericValueMap);
+
+export const stringToNumber = (s: string, backwards: boolean = false): number => {
+  const backwardsWordsToNumericValueMap = cloneMapWithReversedKeys(wordsToNumericValueMap)
+
+  const stringsToNumericValuesMap = backwards
+    ? { ...numbersToValueMap, ...backwardsWordsToNumericValueMap }
+    : { ...numbersToValueMap, ...wordsToNumericValueMap };
+  if (Object.keys(stringsToNumericValuesMap).indexOf(s) >= 0) {
+    return stringsToNumericValuesMap[s];
   }
 
   throw Error(`Number ${s} not found in set of numbers to search`);

@@ -1,6 +1,6 @@
 import { readAsStrings, workingDirectory } from "./io";
 import * as path from "path";
-import { getFirstAndLastDigitsAsNumber, add, stringToNumber } from "./numbers";
+import { getFirstAndLastDigitsAsNumber, add, stringToNumber, getWordsForDigits, getDigitsAsString } from "./numbers";
 import { findFirst, reverse } from "./strings";
 
 const main = async () => {
@@ -18,37 +18,19 @@ const part1 = (strings: string[]) => {
 };
 
 const part2 = (strings: string[]) => {
-  const forwardsNumbers = [
-    ..."0123456789".split(""), // digits
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-  ];
-
-  const backwardsNumbers = [
-    ..."0123456789".split(""), // digits
-    "eno",
-    "owt",
-    "eerht",
-    "ruof",
-    "evif",
-    "xis",
-    "neves",
-    "thgie",
-    "enin",
+  const numbersAsString = [
+    ...getDigitsAsString(),
+    ...getWordsForDigits()
   ];
 
   const firstDigits = strings
-    .map((s) => findFirst(forwardsNumbers, s))
+    .map((s) => findFirst(numbersAsString, s))
     .map((s) => stringToNumber(s));
+
+  // Now look through the strings backwards - being mindful to look for the reversed words!
+  const backwardsNumbersAsString = numbersAsString.map(reverse)
   const secondDigits = strings
-    .map((s) => findFirst(backwardsNumbers, reverse(s)))
+    .map((s) => findFirst(backwardsNumbersAsString, reverse(s)))
     .map((s) => stringToNumber(s, true));
 
   const total = firstDigits
