@@ -7,6 +7,7 @@ import {
   getWordsForDigits,
   getDigitsAsString,
   backwardsStringToNumber,
+  multiply,
 } from "./numbers";
 import { findFirst, reverse } from "./strings";
 
@@ -16,6 +17,7 @@ const main = async () => {
   const filePath = path.join(workingPath, "day2.data");
   const strings = await readAsStrings(filePath);
   part1(strings);
+  part2(strings);
 };
 
 const part1 = (strings: string[]) => {
@@ -31,6 +33,18 @@ const part1 = (strings: string[]) => {
   console.log(totalOfGameIds);
 };
 
+const part2 = (strings: string[]) => {
+  const powerOfCubes = (counts: number[]) => counts.reduce(multiply, 1);
+
+  const sumOfPowerOfCubes = strings
+    .map(stringToGameResult)
+    .map(findFewestNumberOfCubesRequiredToBePossible)
+    .map(powerOfCubes)
+    .reduce(add);
+
+  console.log(sumOfPowerOfCubes);
+};
+
 type Colour = "red" | "blue" | "green";
 type SelectionResult = [number, Colour];
 type RoundResult = SelectionResult[];
@@ -39,7 +53,7 @@ type GameResult = RoundResult[];
 const stringToGameResult = (s: string): GameResult => {
   const gameInfo = s.split(":")[1];
   const rounds = gameInfo.split(";");
-  const gameResult: GameResult = rounds.map((selections) => {
+  return rounds.map((selections) => {
     const roundResult: RoundResult = selections
       .split(",")
       .map((selection) => selection.trim())
@@ -50,8 +64,6 @@ const stringToGameResult = (s: string): GameResult => {
       });
     return roundResult;
   });
-
-  return gameResult;
 };
 
 const isPossible = (redCount: number, greenCount: number, blueCount: number, result: GameResult) => {
@@ -66,6 +78,17 @@ const isPossible = (redCount: number, greenCount: number, blueCount: number, res
 const ballCount = (colour: Colour, round: RoundResult) => {
   const selection: SelectionResult = round.find((selection) => colour === selection[1]);
   return selection ? selection[0] : 0; // If the colour isn't found, then there's no balls of that colour in the Round Result
+};
+
+const findFewestNumberOfCubesRequiredToBePossible = (game: GameResult) => {
+  const colours: Colour[] = ["red", "green", "blue"];
+  return colours.map((colour) => findMaxColourResult(colour, game));
+};
+
+const findMaxColourResult = (colour: Colour, game: GameResult) => {
+  return game
+    .map((round) => ballCount(colour, round))
+    .reduce((previous, current) => (current > previous ? current : previous));
 };
 
 (async function () {

@@ -12,6 +12,10 @@ export const add = (first: number, second: number): number => {
   return first + second;
 };
 
+export const multiply = (first: number, second: number): number => {
+  return first * second;
+};
+
 const wordsToNumericValueMap = {
   one: 1,
   two: 2,
