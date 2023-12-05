@@ -6,6 +6,7 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
+    "start": "npx ts-node ",
     "prettier": "npx prettier . --write"
   },
   "devDependencies": {
