@@ -5,7 +5,7 @@ export const getFirstAndLastDigitsAsNumber = (s: string): number => {
   const firstDigit = findFirstDigit(s);
   const lastDigit = findFirstDigit(reverse(s));
   const combined = firstDigit + lastDigit;
-  return parseInt(combined, 10);
+  return toInt(combined);
 };
 
 export const add = (first: number, second: number): number => {
@@ -14,6 +14,10 @@ export const add = (first: number, second: number): number => {
 
 export const multiply = (first: number, second: number): number => {
   return first * second;
+};
+
+export const toInt = (s: string): number => {
+  return parseInt(s, 10);
 };
 
 const wordsToNumericValueMap = {

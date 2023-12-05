@@ -8,6 +8,7 @@ import {
   getDigitsAsString,
   backwardsStringToNumber,
   multiply,
+  toInt,
 } from "./numbers";
 import { findFirst, reverse } from "./strings";
 
@@ -59,7 +60,7 @@ const stringToGameResult = (s: string): GameResult => {
       .map((selection) => selection.trim())
       .map((selection) => {
         const components = selection.split(" ").map((s) => s.trim());
-        const selectionResult: SelectionResult = [parseInt(components[0], 10), components[1] as Colour];
+        const selectionResult: SelectionResult = [toInt(components[0]), components[1] as Colour];
         return selectionResult;
       });
     return roundResult;

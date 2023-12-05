@@ -7,6 +7,7 @@ import {
   getWordsForDigits,
   getDigitsAsString,
   backwardsStringToNumber,
+  toInt,
 } from "./numbers";
 import { findFirst, reverse } from "./strings";
 
@@ -34,7 +35,6 @@ const part2 = (strings: string[]) => {
   const secondDigits = strings.map((s) => findFirst(backwardsNumbersAsString, reverse(s))).map(backwardsStringToNumber);
 
   const zipWithSecondDigit = (value: number, index: number) => `${value}${secondDigits[index]}`;
-  const toInt = (s: string) => parseInt(s, 10);
   const total = firstDigits.map(zipWithSecondDigit).map(toInt).reduce(add, 0);
 
   console.log(total);
