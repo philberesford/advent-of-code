@@ -41,7 +41,9 @@ const part2 = (strings: string[]) => {
     .map(backwardsStringToNumber);
 
   const zipWithSecondDigit = (value: number, index: number) => parseInt(`${value}${secondDigits[index]}`, 10);
-  const total = firstDigits.map(zipWithSecondDigit).reduce(add, 0);
+  const total = firstDigits
+      .map(zipWithSecondDigit)
+      .reduce(add, 0);
 
   console.log(total);
 };
